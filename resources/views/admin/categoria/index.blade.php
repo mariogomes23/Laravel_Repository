@@ -4,6 +4,7 @@
 
 @section('content_header')
     <h1>Categorias</h1>
+    <a href="{{route("categoria.create")}}" class="btn btn-primary">Adicionar</a>
 @stop
 
 @section('content')
@@ -13,25 +14,28 @@
             <table class="table table-striped">
                    <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Titulo</th>
-                        <th>Slug</th>
-                        <th>Descrição</th>
+                        <th scope="col">#</th>
+                        <th  scope="col">Titulo</th>
+                        <th  scope="col">Slug</th>
+                        <th  scope="col">Descrição</th>
+                        <th  scope="col">Opção</th>
                     </tr>
                    </thead>
 
                    <tbody>
-                    <tr>
-                        @forelse ($categorias as $cat )
-                        <td>{{$cat->id}}</td>
-                        <td>{{$cat->titulo}}</td>
-                        <td>{{$cat->slug}}</td>
-                        <td>{{$cat->descricao}}</td>
 
-                        @empty
-                        <p>sem categorias disponiveis</p>
-                        @endforelse
+                    @foreach ($categorias as $cat )
+                        <tr>
+
+                        <td scope="row"> {{$cat->id}}</td>
+                        <td scope="row">{{$cat->titulo}}</td>
+                        <td scope="row">{{$cat->slug}}</td>
+                        <td scope="row">{{$cat->descricao}}</td>
+                        <td scope="row">
+
                     </tr>
+
+                    @endforeach
                    </tbody>
 
             </table>

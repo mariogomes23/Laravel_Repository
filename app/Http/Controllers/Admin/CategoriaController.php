@@ -28,6 +28,10 @@ class CategoriaController extends Controller
     public function create()
     {
         //
+        $categorias = DB::table("categorias")->get();
+
+        return View("admin.categoria.create",compact("categorias"));
+
     }
 
     /**
@@ -35,7 +39,14 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
+        DB::table("categorias")->insert([
+
+            "titulo"=>$request->titulo,
+            "slug"=>$request->slug,
+            "descricao"=>$request->descricao,
+        ]);
         //
+        return redirect()->route("categoria.index");
     }
 
     /**
