@@ -62,8 +62,12 @@ class CategoriaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $id)
     {
+        $categorias = DB::table("categorias")->where("id",$id)->first();
+
+        return View("admin.categoria.edit",compact("categorias"));
+
         //
     }
 
@@ -73,6 +77,16 @@ class CategoriaController extends Controller
     public function update(CategoriaUpdateRequest $request, string $id)
     {
         //
+        DB::table('categorias')->where("id",$id)->update([
+
+            "titulo"=>$request->titulo,
+            "slug"=>$request->slug,
+            "descricao"=>$request->descricao,
+
+
+        ]);
+
+        return redirect()->route("categoria.index")->with("message","Categoria atualizada com sucesso");
     }
 
     /**

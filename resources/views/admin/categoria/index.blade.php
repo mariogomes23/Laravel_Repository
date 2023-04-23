@@ -8,7 +8,7 @@
 @stop
 
 @section('content')
-   <div class="content row">
+   <div class="content col-12 row">
     <div class="box box-primary">
         <div class=" box-body">
 
@@ -37,6 +37,8 @@
                         <td scope="row">{{$cat->slug}}</td>
                         <td scope="row">{{$cat->descricao}}</td>
                         <td scope="row">
+                        <a href="{{route("categoria.edit",$cat->id)}}" class="badge bg-yellow">Editar</a>
+                        </td>
 
                     </tr>
 
