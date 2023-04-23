@@ -54,8 +54,11 @@ class CategoriaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $id)
     {
+        $categorias = DB::table("categorias")->where("id",$id)->first();
+
+        return View("admin.categoria.show",compact("categorias"));
         //
     }
 

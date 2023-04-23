@@ -38,6 +38,7 @@
                         <td scope="row">{{$cat->descricao}}</td>
                         <td scope="row">
                         <a href="{{route("categoria.edit",$cat->id)}}" class="badge bg-yellow">Editar</a>
+                        <a href="{{route("categoria.show",$cat->id)}}" class="badge bg-info">ver</a>
                         </td>
 
                     </tr>
