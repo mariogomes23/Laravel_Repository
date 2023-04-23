@@ -14,9 +14,9 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
-    'title_prefix' => '',
-    'title_postfix' => '',
+    'title' => 'Laravel Repositorio',
+    'title_prefix' => 'Mario',
+    'title_postfix' => 'Gomes',
 
     /*
     |--------------------------------------------------------------------------
