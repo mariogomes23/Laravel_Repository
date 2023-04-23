@@ -11,6 +11,11 @@
    <div class="content row">
     <div class="box box-primary">
         <div class=" box-body">
+
+            @if (Session::has("message"))
+            <p class="alert alert-success">{{ Session::get("message")}}</p>
+
+            @endif
             <table class="table table-striped">
                    <thead>
                     <tr>

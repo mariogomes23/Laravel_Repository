@@ -35,7 +35,10 @@
 
                 </div>
                 <div class="form-group">
-                   <textarea name="descricao" cols="5" value="{{old("descricao")}}" class="form-control" rows="5"></textarea>
+                   <textarea name="descricao" cols="5"  class="form-control" rows="5">
+
+                    {{old("descricao")}}
+                   </textarea>
 
 
                    @error("descricao")

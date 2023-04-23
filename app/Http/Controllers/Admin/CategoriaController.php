@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Categoria\CategoriaCreateRequest;
+use App\Http\Requests\Categoria\CategoriaUpdateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -37,7 +39,7 @@ class CategoriaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoriaCreateRequest $request)
     {
         DB::table("categorias")->insert([
 
@@ -46,7 +48,7 @@ class CategoriaController extends Controller
             "descricao"=>$request->descricao,
         ]);
         //
-        return redirect()->route("categoria.index");
+        return redirect()->route("categoria.index")->with("message","Categoria adicionada com sucesso");
     }
 
     /**
@@ -68,7 +70,7 @@ class CategoriaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CategoriaUpdateRequest $request, string $id)
     {
         //
     }
