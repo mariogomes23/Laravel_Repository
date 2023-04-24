@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Produto\ProdutoCreateRequest;
+use App\Http\Requests\Produto\ProdutoUpdateRequest;
 use App\Models\Categoria;
 use App\Models\Produto;
 use Illuminate\Http\Request;
@@ -44,7 +46,7 @@ class ProdutoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProdutoCreateRequest $request)
     {
         /*$categorias = Categoria::findOrFail($request->categoria_id);
 
@@ -60,7 +62,7 @@ class ProdutoController extends Controller
         ]);
         */
         $this->produto->create($request->all());
-        
+
 
         return redirect()->route("produto.index")->with("message","Produto adicionado com successo");
     }
@@ -84,7 +86,7 @@ class ProdutoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ProdutoUpdateRequest $request, string $id)
     {
         //
     }
