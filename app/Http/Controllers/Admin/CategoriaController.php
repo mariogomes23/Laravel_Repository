@@ -95,8 +95,26 @@ class CategoriaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
         //
+
+
+        DB::table("categorias")->where("id",$id)->delete();
+
+        return redirect()->route("categoria.index")->with("message","Categoria apagada com sucesso");
+    }
+
+
+
+    public function search(Request $request)
+    {
+     $categorias = DB::table("categorias")
+      ->where("titulo",$request->pesquisar)
+      ->orWhere("slug",$request->pesquisar)
+      ->orWhere("descricao","LIKE","%{$request->pesquisar}%")
+      ->get();
+
+      return View("admin.categoria.index",compact("categorias"));
     }
 }

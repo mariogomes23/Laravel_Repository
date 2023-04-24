@@ -5,6 +5,21 @@
 @section('content_header')
     <h1>Categorias</h1>
     <a href="{{route("categoria.create")}}" class="btn btn-primary">Adicionar</a>
+
+    <div class="content mt-2 row">
+        <div class="box box-primary">
+            <div class=" box-body">
+                <form action="{{ route("categoria.search")}}" style="display: inline;">
+                    @csrf
+                    @method("GET")
+                    <input type="text" name="pesquisar" id=""  class="form-control" placeholder="pesquisar">
+                    <input type="submit" class="btn btn-primary mt-2" value="enviar">
+                </form>
+
+            </div>
+        </div>
+    </div>
+
 @stop
 
 @section('content')
@@ -39,6 +54,12 @@
                         <td scope="row">
                         <a href="{{route("categoria.edit",$cat->id)}}" class="badge bg-yellow">Editar</a>
                         <a href="{{route("categoria.show",$cat->id)}}" class="badge bg-info">ver</a>
+                        <form action="{{route("categoria.destroy",$cat->id)}}" method="POST" style="display:inline;">
+                            @csrf
+                            @method("DELETE")
+                            <button type="submit" class="badge btn bg-danger">apagar</button>
+
+                        </form>
                         </td>
 
                     </tr>
