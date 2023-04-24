@@ -1,15 +1,15 @@
 @extends('adminlte::page')
 
-@section('title', 'Categorias')
+@section('title', 'Produtos')
 
 @section('content_header')
-    <h1>Categorias</h1>
-    <a href="{{route("categoria.create")}}" class="btn btn-primary">Adicionar</a>
+    <h1>Produtos</h1>
+    <a href="{{route("produto.create")}}" class="btn btn-primary">Adicionar</a>
 
     <div class="content mt-2 row">
         <div class="box box-primary">
             <div class=" box-body">
-                <form action="{{ route("categoria.search")}}" style="display: inline;">
+                <form action="#" style="display: inline;">
                     @csrf
                     @method("GET")
                     <input type="text" name="pesquisar" id=""  class="form-control" placeholder="pesquisar">
@@ -35,8 +35,10 @@
                    <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th  scope="col">Titulo</th>
+                        <th  scope="col">Nome</th>
+                        <th  scope="col">Preço</th>
                         <th  scope="col">Slug</th>
+                        <th  scope="col">Categoria</th>
                         <th  scope="col">Descrição</th>
                         <th  scope="col">Opção</th>
                     </tr>
@@ -44,17 +46,19 @@
 
                    <tbody>
 
-                    @foreach ($categorias as $cat )
+                    @foreach ($produtos as $produto )
                         <tr>
 
-                        <td scope="row"> {{$cat->id}}</td>
-                        <td scope="row">{{$cat->titulo}}</td>
-                        <td scope="row">{{$cat->slug}}</td>
-                        <td scope="row">{{$cat->descricao}}</td>
+                        <td scope="row"> {{$produto->id}}</td>
+                        <td scope="row">{{$produto->nome}}</td>
+                        <td scope="row">{{$produto->preco}}</td>
+                        <td scope="row">{{$produto->slug}}</td>
+                        <td scope="row">{{$produto->categoria->nome}}</td>
+                        <td scope="row">{{$produto->descricao}}</td>
                         <td scope="row">
-                        <a href="{{route("categoria.edit",$cat->id)}}" class="badge bg-yellow">Editar</a>
-                        <a href="{{route("categoria.show",$cat->id)}}" class="badge bg-info">ver</a>
-                        <form action="{{route("categoria.destroy",$cat->id)}}" method="POST" style="display:inline;">
+                        <a href="{{route("produto.edit",$produto->id)}}" class="badge bg-yellow">Editar</a>
+                        <a href="{{route("produto.show",$produto->id)}}" class="badge bg-info">ver</a>
+                        <form action="{{route("produto.destroy",$produto->id)}}" method="POST" style="display:inline;">
                             @csrf
                             @method("DELETE")
                             <button type="submit" class="badge btn bg-danger">apagar</button>
@@ -69,7 +73,7 @@
 
             </table>
 
-            {{ $categorias ->links()}}
+            {{ $produtos ->links()}}
 
         </div>
 

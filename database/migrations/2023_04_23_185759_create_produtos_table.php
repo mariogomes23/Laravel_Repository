@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('produtos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId("categoria_id")
+            ->constrained()
+            ->onDelete("cascade");
+            $table->decimal("preco",10,2);
+            $table->string("nome")->unique();
+            $table->string("slug")->unique();
+            $table->string("descricao")->nullable();
+
             $table->timestamps();
         });
     }

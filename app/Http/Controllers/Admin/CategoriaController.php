@@ -16,7 +16,7 @@ class CategoriaController extends Controller
     public function index()
     {
         //
-        $categorias = DB::table("categorias")->get();
+        $categorias = DB::table("categorias")->orderBy("id","desc")->paginate(2);
 
         return  View("admin.categoria.index",compact("categorias"));
 
@@ -113,7 +113,7 @@ class CategoriaController extends Controller
       ->where("titulo",$request->pesquisar)
       ->orWhere("slug",$request->pesquisar)
       ->orWhere("descricao","LIKE","%{$request->pesquisar}%")
-      ->get();
+      ->paginate(2);
 
       return View("admin.categoria.index",compact("categorias"));
     }
