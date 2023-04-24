@@ -9,7 +9,7 @@
     <div class="content mt-2 row">
         <div class="box box-primary">
             <div class=" box-body">
-                <form action="#" style="display: inline;">
+                <form action="{{ route("produto.search")}}" style="display: inline;" method="GET">
                     @csrf
                     @method("GET")
                     <input type="text" name="pesquisar" id=""  class="form-control" placeholder="pesquisar">

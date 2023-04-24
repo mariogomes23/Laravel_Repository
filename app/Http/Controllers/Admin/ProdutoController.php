@@ -70,32 +70,61 @@ class ProdutoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $id)
     {
         //
+              //
+              $categorias = Categoria::all();
+              $produtos = $this->produto->findOrFail($id);
+
+              return View("admin.produto.show",compact("produtos","categorias"));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $id)
     {
         //
+        $categorias = Categoria::all();
+        $produtos = $this->produto->findOrFail($id);
+        return View("admin.produto.edit",compact("produtos","categorias"));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(ProdutoUpdateRequest $request, string $id)
+    public function update(ProdutoUpdateRequest $request, int $id)
     {
+        $produtos = $this->produto->findOrFail($id);
+        $produtos->update($request->all());
+
+        return redirect()->route("produto.index")->with("message","Produto atualizado com successo");
         //
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
+        $produtos = $this->produto->findOrFail($id);
+        $produtos->delete();
+
+        return redirect()->route("produto.index")->with("message","Produto apagado com successo");
         //
+    }
+
+    public function search(Request $request)
+    {
+
+        $produtos = $this->produto
+        ->where("nome",$request->pesquisar)
+        ->Orwhere("slug","LIKE","%{$request->pesquisar}%")
+        ->paginate(2);
+
+        return View("admin.produto.index",compact("produtos"));
+
+
     }
 }

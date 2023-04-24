@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Ver Categorias')
+@section('title', 'Ver Produto')
 
 @section('content_header')
-    <h1>Ver Categoria</h1>
+    <h1>Ver Produto</h1>
 
 @stop
 
@@ -11,38 +11,28 @@
    <div class="content row">
     <div class="box box-primary">
         <div class=" box-body">
+            <ul class="list-group">
+                <li>
+                 Nome :   {{ $produtos->nome}}
+                </li>
+                <li>
+                    Slug :   {{ $produtos->slug}}
+                   </li>
+                   <li>
+                    Preço :   {{ $produtos->preco}}
+                   </li>
+                   <li>
+                    Categoria :   {{ $produtos->categoria->titulo}}
+                   </li>
+                   <li>
+                    Descrição :   {{ $produtos->descricao}}
+                   </li>
 
 
-                <div class="form-group">
-                    <input type="text" disabled value="{{ $categorias->titulo}}" class="form-control" >
+            </ul>
 
+            <a href="{{ route("produto.index")}}" class="btn btn-primary">Voltar</a>
 
-
-                </div>
-                <div class="form-group">
-                    <input type="text" disabled  value="{{ $categorias->slug}}"  class="form-control">
-
-
-
-
-                </div>
-                <div class="form-group">
-                   <textarea name="descricao" disabled cols="5"  class="form-control" rows="5">
-
-                    {{ $categorias->descricao}}
-                   </textarea>
-
-
-
-
-                </div>
-
-                <div class="form-group">
-          <a href="{{route("categoria.index")}}" class="btn btn-primary">Voltar</a>
-
-
-
-                </div>
 
 
         </div>

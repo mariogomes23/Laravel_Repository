@@ -11,7 +11,7 @@ class ProdutoUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,6 +22,11 @@ class ProdutoUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            "nome"=>["nullable","min:3","max:100"],
+            "preco"=>["nullable"],
+            "slug"=>["nullable","min:3","max:100"],
+            "categoria_id"=>["required","exists:categorias,id"],
+            "descricao"=>["max:100"]
             //
         ];
     }
