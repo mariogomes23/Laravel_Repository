@@ -53,7 +53,7 @@
                         <td scope="row">{{$produto->nome}}</td>
                         <td scope="row">{{$produto->preco}}</td>
                         <td scope="row">{{$produto->slug}}</td>
-                        <td scope="row">{{$produto->categoria->nome}}</td>
+                        <td scope="row">{{$produto->categoria->titulo}}</td>
                         <td scope="row">{{$produto->descricao}}</td>
                         <td scope="row">
                         <a href="{{route("produto.edit",$produto->id)}}" class="badge bg-yellow">Editar</a>

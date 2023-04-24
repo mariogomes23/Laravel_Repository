@@ -46,7 +46,23 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
+        /*$categorias = Categoria::findOrFail($request->categoria_id);
+
         //
+       $produtos =$categorias->produtos()->create([
+
+            "nome"=>$request->nome,
+            "slug"=>$request->slug,
+            "preco"=>$request->preco,
+            "descricao"=>$request->descricao,
+            "categoria_id"=>$request->categoria_id,
+
+        ]);
+        */
+        $this->produto->create($request->all());
+        
+
+        return redirect()->route("produto.index")->with("message","Produto adicionado com successo");
     }
 
     /**
