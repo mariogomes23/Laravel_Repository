@@ -6,18 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Produto\ProdutoCreateRequest;
 use App\Http\Requests\Produto\ProdutoUpdateRequest;
 use App\Models\Categoria;
-use App\repositories\IProdutoRepository;
+use App\Models\Produto;
+use App\Repositories\IProdutoRepository;
 use Illuminate\Http\Request;
 
 
 class ProdutoController extends Controller
 {
 
-    private $repository;
+    private $produto;
 
-    public function __construct(IProdutoRepository $repository)
+    public function __construct(Produto $produto)
     {
-        $this->repository = $repository ;
+        $this->produto = $produto ;
 
     }
     /**
@@ -26,7 +27,7 @@ class ProdutoController extends Controller
     public function index()
     {
         //
-        $produtos = $this->repository->paginate(5);
+        $produtos = $this->produto->paginate();
 
         return View("admin.produto.index",compact("produtos"));
     }
@@ -38,7 +39,7 @@ class ProdutoController extends Controller
     {
         //
         $categorias = Categoria::all();
-        $produtos = $this->repository->all();
+        $produtos = $this->produto->all();
 
 
         return View("admin.produto.create",compact("produtos","categorias"));
@@ -62,7 +63,7 @@ class ProdutoController extends Controller
 
         ]);
         */
-        $this->repository->create($request->all());
+        $this->produto->create($request->all());
 
 
         return redirect()->route("produto.index")->with("message","Produto adicionado com successo");
@@ -76,7 +77,7 @@ class ProdutoController extends Controller
         //
               //
               $categorias = Categoria::all();
-              $produtos = $this->repository->findOrFail($id);
+              $produtos = $this->produto->findOrFail($id);
 
               return View("admin.produto.show",compact("produtos","categorias"));
     }
@@ -88,7 +89,7 @@ class ProdutoController extends Controller
     {
         //
         $categorias = Categoria::all();
-        $produtos = $this->repository->findOrFail($id);
+        $produtos = $this->produto->findOrFail($id);
         return View("admin.produto.edit",compact("produtos","categorias"));
     }
 
@@ -97,7 +98,7 @@ class ProdutoController extends Controller
      */
     public function update(ProdutoUpdateRequest $request, int $id)
     {
-        $produtos = $this->repository->findOrFail($id);
+        $produtos = $this->produto->findOrFail($id);
         $produtos->update($request->all());
 
         return redirect()->route("produto.index")->with("message","Produto atualizado com successo");
@@ -109,7 +110,7 @@ class ProdutoController extends Controller
      */
     public function destroy(int $id)
     {
-        $produtos = $this->repository->findOrFail($id);
+        $produtos = $this->produto->findOrFail($id);
         $produtos->delete();
 
         return redirect()->route("produto.index")->with("message","Produto apagado com successo");
@@ -119,7 +120,7 @@ class ProdutoController extends Controller
     public function search(Request $request)
     {
 
-        $produtos = $this->repository
+        $produtos = $this->produto
         ->where("nome",$request->pesquisar)
         ->Orwhere("slug","LIKE","%{$request->pesquisar}%")
         ->paginate(2);

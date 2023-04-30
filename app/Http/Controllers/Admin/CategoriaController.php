@@ -5,18 +5,27 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Categoria\CategoriaCreateRequest;
 use App\Http\Requests\Categoria\CategoriaUpdateRequest;
+use App\Models\Categoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class CategoriaController extends Controller
 {
+    private $categoria;
+
+    public function __construct(Categoria $categoria)
+    {
+        $this->categoria = $categoria;
+
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         //
-        $categorias = DB::table("categorias")->orderBy("id","desc")->paginate(2);
+        $categorias = $this->categoria->orderBy("id","desc")->paginate(2);
+
 
         return  View("admin.categoria.index",compact("categorias"));
 
@@ -30,7 +39,7 @@ class CategoriaController extends Controller
     public function create()
     {
         //
-        $categorias = DB::table("categorias")->get();
+        $categorias = $this->categoria->get();
 
         return View("admin.categoria.create",compact("categorias"));
 
@@ -41,12 +50,13 @@ class CategoriaController extends Controller
      */
     public function store(CategoriaCreateRequest $request)
     {
-        DB::table("categorias")->insert([
-
+        $this->categoria->create([
             "titulo"=>$request->titulo,
             "slug"=>$request->slug,
             "descricao"=>$request->descricao,
+
         ]);
+
         //
         return redirect()->route("categoria.index")->with("message","Categoria adicionada com sucesso");
     }
@@ -56,7 +66,8 @@ class CategoriaController extends Controller
      */
     public function show(int $id)
     {
-        $categorias = DB::table("categorias")->where("id",$id)->first();
+        $categorias = $this->categoria->findOrFail($id);
+
 
         return View("admin.categoria.show",compact("categorias"));
         //
@@ -67,7 +78,8 @@ class CategoriaController extends Controller
      */
     public function edit(int $id)
     {
-        $categorias = DB::table("categorias")->where("id",$id)->first();
+
+        $categorias = $this->categoria->findOrFail($id);
 
         return View("admin.categoria.edit",compact("categorias"));
 
@@ -80,14 +92,13 @@ class CategoriaController extends Controller
     public function update(CategoriaUpdateRequest $request, string $id)
     {
         //
-        DB::table('categorias')->where("id",$id)->update([
+    $this->categoria->findOrFail($id)->update([
 
             "titulo"=>$request->titulo,
             "slug"=>$request->slug,
             "descricao"=>$request->descricao,
-
-
         ]);
+
 
         return redirect()->route("categoria.index")->with("message","Categoria atualizada com sucesso");
     }
@@ -99,8 +110,7 @@ class CategoriaController extends Controller
     {
         //
 
-
-        DB::table("categorias")->where("id",$id)->delete();
+        $this->categoria->findOrFail($id)->delete();
 
         return redirect()->route("categoria.index")->with("message","Categoria apagada com sucesso");
     }
@@ -109,11 +119,12 @@ class CategoriaController extends Controller
 
     public function search(Request $request)
     {
-     $categorias = DB::table("categorias")
-      ->where("titulo",$request->pesquisar)
-      ->orWhere("slug",$request->pesquisar)
-      ->orWhere("descricao","LIKE","%{$request->pesquisar}%")
-      ->paginate(2);
+        $categorias = $this->categoria
+                            ->where("titulo",$request->titulo)
+                            ->orWhere("slug",$request->slug)
+                            ->orWhere("descricao","LIKE","%{$request->pesquisar}%")
+                            ->paginate(2);
+
 
       return View("admin.categoria.index",compact("categorias"));
     }

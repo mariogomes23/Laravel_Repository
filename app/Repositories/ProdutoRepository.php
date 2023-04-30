@@ -1,10 +1,8 @@
 <?php
-
-
-namespace App\repositories;
+namespace App\Repositories;
 
 use App\Models\Produto;
-use App\repositories\IProdutoRepository;
+use App\Repositories\IProdutoRepository;
 
 
 class  ProdutoRepository implements IProdutoRepository
