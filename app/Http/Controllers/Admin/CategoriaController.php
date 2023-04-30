@@ -6,16 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Categoria\CategoriaCreateRequest;
 use App\Http\Requests\Categoria\CategoriaUpdateRequest;
 use App\Models\Categoria;
+use App\Services\CategoriaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class CategoriaController extends Controller
 {
-    private $categoria;
+    private $service;
 
-    public function __construct(Categoria $categoria)
+    public function __construct(CategoriaService $service)
     {
-        $this->categoria = $categoria;
+        $this->service = $service;
 
     }
     /**
@@ -24,7 +25,7 @@ class CategoriaController extends Controller
     public function index()
     {
         //
-        $categorias = $this->categoria->orderBy("id","desc")->paginate(2);
+        $categorias = $this->service->paginate(2);
 
 
         return  View("admin.categoria.index",compact("categorias"));
@@ -39,7 +40,7 @@ class CategoriaController extends Controller
     public function create()
     {
         //
-        $categorias = $this->categoria->get();
+        $categorias = $this->service->all();
 
         return View("admin.categoria.create",compact("categorias"));
 
@@ -50,7 +51,7 @@ class CategoriaController extends Controller
      */
     public function store(CategoriaCreateRequest $request)
     {
-        $this->categoria->create([
+        $this->service->store([
             "titulo"=>$request->titulo,
             "slug"=>$request->slug,
             "descricao"=>$request->descricao,
@@ -66,7 +67,7 @@ class CategoriaController extends Controller
      */
     public function show(int $id)
     {
-        $categorias = $this->categoria->findOrFail($id);
+        $categorias = $this->service->find($id);
 
 
         return View("admin.categoria.show",compact("categorias"));
@@ -79,7 +80,7 @@ class CategoriaController extends Controller
     public function edit(int $id)
     {
 
-        $categorias = $this->categoria->findOrFail($id);
+        $categorias = $this->service->find($id);
 
         return View("admin.categoria.edit",compact("categorias"));
 
@@ -92,7 +93,7 @@ class CategoriaController extends Controller
     public function update(CategoriaUpdateRequest $request, string $id)
     {
         //
-    $this->categoria->findOrFail($id)->update([
+    $this->service->update($id,[
 
             "titulo"=>$request->titulo,
             "slug"=>$request->slug,
@@ -110,7 +111,7 @@ class CategoriaController extends Controller
     {
         //
 
-        $this->categoria->findOrFail($id)->delete();
+        $this->service->delete($id);
 
         return redirect()->route("categoria.index")->with("message","Categoria apagada com sucesso");
     }
@@ -119,8 +120,8 @@ class CategoriaController extends Controller
 
     public function search(Request $request)
     {
-        $categorias = $this->categoria
-                            ->where("titulo",$request->titulo)
+        $categorias = Categoria::
+                            where("titulo",$request->titulo)
                             ->orWhere("slug",$request->slug)
                             ->orWhere("descricao","LIKE","%{$request->pesquisar}%")
                             ->paginate(2);

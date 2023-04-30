@@ -1,11 +1,14 @@
 <?php
 
-namespace App\RepositoryInterface\contracts;
+namespace App\Repositories;
 
-interface RepositoryInterface
+use Illuminate\Database\Eloquent\Model;
+
+interface ICategoriaRepository
 {
-  
 
+
+    public function __construct(Model $model);
     public function all();
     public function find(int $id);
     public function findWhere($coluna,$valor);
