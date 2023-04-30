@@ -7,18 +7,18 @@ use App\Http\Requests\Produto\ProdutoCreateRequest;
 use App\Http\Requests\Produto\ProdutoUpdateRequest;
 use App\Models\Categoria;
 use App\Models\Produto;
-use App\Repositories\IProdutoRepository;
+use App\Services\ProdutoService;
 use Illuminate\Http\Request;
 
 
 class ProdutoController extends Controller
 {
 
-    private $produto;
+    private $service;
 
-    public function __construct(Produto $produto)
+    public function __construct(ProdutoService $service)
     {
-        $this->produto = $produto ;
+        $this->service = $service;
 
     }
     /**
@@ -27,7 +27,7 @@ class ProdutoController extends Controller
     public function index()
     {
         //
-        $produtos = $this->produto->paginate();
+        $produtos = $this->service->paginate();
 
         return View("admin.produto.index",compact("produtos"));
     }
@@ -39,7 +39,7 @@ class ProdutoController extends Controller
     {
         //
         $categorias = Categoria::all();
-        $produtos = $this->produto->all();
+        $produtos = $this->service->all();
 
 
         return View("admin.produto.create",compact("produtos","categorias"));
@@ -63,7 +63,7 @@ class ProdutoController extends Controller
 
         ]);
         */
-        $this->produto->create($request->all());
+        $this->service->store($request->all());
 
 
         return redirect()->route("produto.index")->with("message","Produto adicionado com successo");
@@ -77,7 +77,7 @@ class ProdutoController extends Controller
         //
               //
               $categorias = Categoria::all();
-              $produtos = $this->produto->findOrFail($id);
+              $produtos = $this->service->find($id);
 
               return View("admin.produto.show",compact("produtos","categorias"));
     }
@@ -89,7 +89,7 @@ class ProdutoController extends Controller
     {
         //
         $categorias = Categoria::all();
-        $produtos = $this->produto->findOrFail($id);
+        $produtos = $this->service->find($id);
         return View("admin.produto.edit",compact("produtos","categorias"));
     }
 
@@ -98,8 +98,8 @@ class ProdutoController extends Controller
      */
     public function update(ProdutoUpdateRequest $request, int $id)
     {
-        $produtos = $this->produto->findOrFail($id);
-        $produtos->update($request->all());
+        $produtos = $this->service->update($id,$request->all());
+
 
         return redirect()->route("produto.index")->with("message","Produto atualizado com successo");
         //
@@ -110,8 +110,8 @@ class ProdutoController extends Controller
      */
     public function destroy(int $id)
     {
-        $produtos = $this->produto->findOrFail($id);
-        $produtos->delete();
+            $this->service->delete($id);
+
 
         return redirect()->route("produto.index")->with("message","Produto apagado com successo");
         //
@@ -120,8 +120,8 @@ class ProdutoController extends Controller
     public function search(Request $request)
     {
 
-        $produtos = $this->produto
-        ->where("nome",$request->pesquisar)
+        $produtos = Produto::
+         where("nome",$request->pesquisar)
         ->Orwhere("slug","LIKE","%{$request->pesquisar}%")
         ->paginate(2);
 

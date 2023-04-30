@@ -1,16 +1,15 @@
 <?php
 namespace App\Repositories;
 
-use App\Models\Produto;
 use App\Repositories\IProdutoRepository;
-
+use Illuminate\Database\Eloquent\Model;
 
 class  ProdutoRepository implements IProdutoRepository
 {
 
     protected $model;
 
-    public function __construct(Produto $model) {
+    public function __construct(Model $model) {
 
         $this->model = $model;
     }
@@ -60,6 +59,7 @@ class  ProdutoRepository implements IProdutoRepository
       //====================================================
       public function search(){
 
+        
       }
       //====================================================
 
