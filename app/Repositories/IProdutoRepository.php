@@ -16,7 +16,7 @@ interface IProdutoRepository
     public function store(array $dados);
     public function update(int $id,array $dados);
     public function delete(int $id);
-    public function search();
+    public function search($coluna,$valor);
 
 
 

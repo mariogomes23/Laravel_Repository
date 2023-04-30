@@ -44,4 +44,9 @@ class CategoriaService
 
     }
 
+    public function search($coluna,$valor)
+    {
+        return $this->repository->search($coluna,$valor);
+    }
+
 }

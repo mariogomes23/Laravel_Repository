@@ -12,7 +12,7 @@
                 <form action="{{ route("produto.search")}}" style="display: inline;" method="GET">
                     @csrf
                     @method("GET")
-                    <input type="text" name="pesquisar" id=""  class="form-control" placeholder="pesquisar">
+                    <input type="text" name="nome" id=""  class="form-control" placeholder="pesquisar">
                     <input type="submit" class="btn btn-primary mt-2" value="enviar">
                 </form>
 

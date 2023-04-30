@@ -57,9 +57,9 @@ class  ProdutoRepository implements IProdutoRepository
         return $this->model->findOrFail($id)->delete();
     }
       //====================================================
-      public function search(){
+      public function search($coluna,$valor){
+  return $this->model->where($coluna,"LIKE","%{$valor}%")->paginate();
 
-        
       }
       //====================================================
 

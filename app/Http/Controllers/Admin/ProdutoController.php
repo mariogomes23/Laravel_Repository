@@ -119,11 +119,9 @@ class ProdutoController extends Controller
 
     public function search(Request $request)
     {
-
-        $produtos = Produto::
-         where("nome",$request->pesquisar)
-        ->Orwhere("slug","LIKE","%{$request->pesquisar}%")
-        ->paginate(2);
+        $coluna = "nome";
+        $valor = $request->nome;
+        $produtos = $this->service->search($coluna,$valor);
 
         return View("admin.produto.index",compact("produtos"));
 

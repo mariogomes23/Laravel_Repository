@@ -120,11 +120,9 @@ class CategoriaController extends Controller
 
     public function search(Request $request)
     {
-        $categorias = Categoria::
-                            where("titulo",$request->titulo)
-                            ->orWhere("slug",$request->slug)
-                            ->orWhere("descricao","LIKE","%{$request->pesquisar}%")
-                            ->paginate(2);
+        $coluna ="titulo";
+        $valor=$request->titulo;
+        $categorias = $this->service->search($coluna,$valor);
 
 
       return View("admin.categoria.index",compact("categorias"));

@@ -42,4 +42,12 @@ class CategoriaRepository implements ICategoriaRepository
 
     }
 
+    public function search($coluna,$valor)
+    {
+
+        return $this->model
+        ->where($coluna,"LIKE","%{$valor}%")
+        ->paginate();
+    }
+
 }

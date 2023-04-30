@@ -45,7 +45,7 @@ class ProdutoService{
     public function delete(int $id){
         return $this->repository->delete($id);
     }
-    public function search(){
-        return $this->repository->search();
+    public function search($coluna,$valor){
+        return $this->repository->search($coluna,$valor);
     }
 }
